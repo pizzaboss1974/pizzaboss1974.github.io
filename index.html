@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#FAFAF8;
+    --ink:#141414;
+    --grey:#6E6E68;
+    --hair:#D9D9D3;
+    --blue:#1F3A5F;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== EDIT THIS: your name / title shown in the header ===== */
+  .site-name{font-weight:700; letter-spacing:-0.01em;}
+
+  a{color:inherit; text-decoration:none;}
+
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--hair);
+  }
+  .header-inner{
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+  }
+  .site-name{font-size:1.05rem;}
+  .site-name .mono{font-size:0.7rem; color:var(--grey); display:block; letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;}
+  nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--grey);
+  }
+  nav a:hover{color:var(--ink);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:1400px; margin:0 auto;
+    padding:64px 32px 48px;
+    border-bottom:1px solid var(--hair);
+  }
+  .hero-index{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:var(--grey);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 4rem);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+    max-width:16ch;
+  }
+  /* ===== EDIT THIS: your one-line intro ===== */
+  .hero p{
+    margin-top:20px;
+    max-width:52ch;
+    color:var(--grey);
+    font-size:1rem;
+    line-height:1.5;
+  }
+
+  /* ---------- Gallery grid ---------- */
+  main{max-width:1400px; margin:0 auto; padding:8px 32px 80px;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--hair);
+    margin-top:1px;
+  }
+  @media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:600px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--paper);
+    padding:28px 24px 22px;
+    cursor:pointer;
+    position:relative;
+    transition:background 0.25s ease;
+    min-height:280px;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{background:#F1F1EC;}
+
+  .card-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--grey);
+    letter-spacing:0.08em;
+  }
+
+  .card-thumb{
+    flex:1;
+    margin:16px 0;
+    background:#EAEAE4 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="none" stroke="%23c9c9c1" stroke-width="0.5"/><line x1="0" y1="0" x2="100" y2="100" stroke="%23c9c9c1" stroke-width="0.5"/><line x1="100" y1="0" x2="0" y2="100" stroke="%23c9c9c1" stroke-width="0.5"/></svg>');
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    overflow:hidden;
+    min-height:160px;
+  }
+  .card-thumb img{width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0;}
+
+  /* corner registration marks — appear on hover, nod to drawing sheet crop marks */
+  .card-thumb::before, .card-thumb::after{
+    content:''; position:absolute; width:14px; height:14px;
+    border-top:1px solid var(--ink); border-left:1px solid var(--ink);
+    top:6px; left:6px; opacity:0; transition:opacity 0.25s ease;
+  }
+  .card-thumb::after{
+    top:auto; left:auto; bottom:6px; right:6px;
+    border-top:none; border-left:none;
+    border-bottom:1px solid var(--ink); border-right:1px solid var(--ink);
+  }
+  .card:hover .card-thumb::before, .card:hover .card-thumb::after{opacity:0.6;}
+
+  .card-title{font-size:1.05rem; font-weight:600; letter-spacing:-0.01em; margin-bottom:4px;}
+  .card-meta{font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--grey); letter-spacing:0.04em;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--hair);
+    padding:28px 32px;
+    max-width:1400px; margin:0 auto;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--grey);
+    letter-spacing:0.04em;
+  }
+  footer a:hover{color:var(--ink);}
+
+  /* ---------- Project detail view ---------- */
+  #detail{display:none;}
+  body.detail-open #gallery-view{display:none;}
+  body.detail-open #detail{display:block;}
+
+  .back-link{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--grey);
+    margin:32px 0 8px;
+  }
+  .back-link:hover{color:var(--ink);}
+
+  .titleblock{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:32px;
+    border-top:1px solid var(--hair);
+    border-bottom:1px solid var(--hair);
+    padding:28px 0;
+    margin-bottom:40px;
+  }
+  @media(max-width:700px){ .titleblock{grid-template-columns:1fr;} }
+
+  .titleblock h2{
+    font-size:clamp(1.8rem, 4vw, 2.8rem);
+    font-weight:700; letter-spacing:-0.02em; line-height:1.05;
+  }
+  .titleblock .desc{margin-top:16px; color:var(--grey); line-height:1.6; max-width:60ch;}
+
+  .meta-list{font-family:'IBM Plex Mono', monospace; font-size:0.78rem;}
+  .meta-list div{
+    display:flex; justify-content:space-between; gap:16px;
+    padding:8px 0; border-bottom:1px solid var(--hair);
+  }
+  .meta-list div span:first-child{color:var(--grey); text-transform:uppercase; letter-spacing:0.06em;}
+
+  .pdf-actions{
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    margin-bottom:16px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem;
+    letter-spacing:0.04em; text-transform:uppercase;
+  }
+  .pdf-actions a{
+    border:1px solid var(--ink); padding:9px 16px;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .pdf-actions a:hover{background:var(--ink); color:var(--paper);}
+  .pdf-actions .hint{color:var(--grey); text-transform:none; letter-spacing:0;}
+
+  .pdf-frame{
+    background:#EAEAE4;
+    height:80vh; min-height:420px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:80px;
+  }
+  .pdf-frame iframe{width:100%; height:100%; border:none; display:block;}
+  .pdf-frame .placeholder-label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--grey);
+    text-align:center; padding:0 24px;
+  }
+  @media(max-width:700px){
+    /* mobile browsers often can't render embedded PDFs — hide the frame, keep the open link */
+    .pdf-frame{display:none;}
+  }
+
+  .project-nav{
+    display:flex; justify-content:space-between;
+    border-top:1px solid var(--hair);
+    padding:24px 0 60px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem; letter-spacing:0.04em; text-transform:uppercase;
+  }
+  .project-nav a:hover{color:var(--blue);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="site-name">
+      <!-- ===== EDIT THIS: your name ===== -->
+      Your Name
+      <span class="mono">Architecture Portfolio</span>
+    </div>
+    <nav>
+      <a href="#/">Index</a>
+    </nav>
+  </div>
+</header>
+
+<div id="gallery-view">
+  <div class="hero">
+    <div class="hero-index mono">Portfolio — 2021 / 2026</div>
+    <h1>Selected studio work.</h1>
+    <!-- ===== EDIT THIS: your intro line ===== -->
+    <p>Twelve architecture studio projects, originally produced as B1 and A3 drawing sets, presented here as full navigable PDFs.</p>
+  </div>
+
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
+</div>
+
+<div id="detail">
+  <main>
+    <a class="back-link mono" href="#/">← Back to index</a>
+    <div id="detail-content"></div>
+  </main>
+</div>
+
+<footer>
+  <!-- ===== EDIT THIS: your contact info ===== -->
+  <span>© <span id="year"></span> Your Name</span>
+  <span><a href="mailto:you@example.com">you@example.com</a> · <a href="https://github.com/yourusername" target="_blank">GitHub</a></span>
+</footer>
+
+<script>
+/* ======================================================================
+   EDIT YOUR PROJECTS HERE.
+   Add / remove / edit objects in this array — one per project.
+   images: put your files in an "images" folder next to this index.html,
+   and list the filenames here, in the order you want them to appear.
+   Leave images: [] to show placeholder frames until you add real files.
+   ====================================================================== */
+const projects = [
+  {
+    title: "Project Title One",
+    year: "2024",
+    type: "Studio Project",
+    location: "City, Country",
+    scale: "1 × B1",
+    description: "One or two sentences describing the concept, site, and program of this project.",
+    cover: "", // e.g. "images/project01-cover.jpg"
+    pdf: ""    // e.g. "pdfs/project01.pdf"
+  },
+  { title: "Project Title Two", year: "2024", type: "Studio Project", location: "City, Country", scale: "3 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Three", year: "2024", type: "Studio Project", location: "City, Country", scale: "1 × A3", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Four", year: "2023", type: "Studio Project", location: "City, Country", scale: "6 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Five", year: "2023", type: "Studio Project", location: "City, Country", scale: "2 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Six", year: "2023", type: "Studio Project", location: "City, Country", scale: "1 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Seven", year: "2023", type: "Studio Project", location: "City, Country", scale: "4 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Eight", year: "2022", type: "Studio Project", location: "City, Country", scale: "1 × A3", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Nine", year: "2022", type: "Studio Project", location: "City, Country", scale: "2 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Ten", year: "2022", type: "Studio Project", location: "City, Country", scale: "1 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Eleven", year: "2021", type: "Studio Project", location: "City, Country", scale: "5 × B1", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" },
+  { title: "Project Title Twelve", year: "2021", type: "Studio Project", location: "City, Country", scale: "1 × A3", description: "One or two sentences describing the concept, site, and program of this project.", cover: "", pdf: "" }
+];
+
+/* ====================================================================== */
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = projects.map((p, i) => `
+    <a class="card" href="#/project/${i}">
+      <div class="card-num mono">A-${pad(i+1)}</div>
+      <div class="card-thumb">
+        ${p.cover ? `<img src="${p.cover}" alt="${p.title}">` : ''}
+      </div>
+      <div class="card-title">${p.title}</div>
+      <div class="card-meta">${p.year} · ${p.type}</div>
+    </a>
+  `).join('');
+}
+
+function renderDetail(i){
+  const p = projects[i];
+  if(!p) return;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="titleblock">
+      <div>
+        <div class="hero-index mono">A-${pad(i+1)}</div>
+        <h2>${p.title}</h2>
+        <p class="desc">${p.description}</p>
+      </div>
+      <div class="meta-list">
+        <div><span>Year</span><span>${p.year}</span></div>
+        <div><span>Type</span><span>${p.type}</span></div>
+        <div><span>Location</span><span>${p.location}</span></div>
+        <div><span>Scale</span><span>${p.scale}</span></div>
+      </div>
+    </div>
+    ${p.pdf ? `
+      <div class="pdf-actions">
+        <a href="${p.pdf}" target="_blank" rel="noopener">Open full PDF ↗</a>
+        <a href="${p.pdf}" download>Download</a>
+        <span class="hint">Scroll or use your browser's PDF controls to page through the full drawing set.</span>
+      </div>
+      <div class="pdf-frame">
+        <iframe src="${p.pdf}" title="${p.title} — full PDF"></iframe>
+      </div>
+    ` : `
+      <div class="pdf-frame">
+        <span class="placeholder-label mono">Add this project's PDF path in the projects array (pdf: "pdfs/yourfile.pdf")</span>
+      </div>
+    `}
+    <div class="project-nav">
+      ${i > 0 ? `<a href="#/project/${i-1}">← A-${pad(i)} Previous</a>` : `<span></span>`}
+      ${i < projects.length-1 ? `<a href="#/project/${i+1}">A-${pad(i+2)} Next →</a>` : `<span></span>`}
+    </div>
+  `;
+}
+
+function route(){
+  const hash = window.location.hash;
+  const match = hash.match(/^#\/project\/(\d+)/);
+  if(match){
+    document.body.classList.add('detail-open');
+    renderDetail(parseInt(match[1]));
+    window.scrollTo(0,0);
+  } else {
+    document.body.classList.remove('detail-open');
+    window.scrollTo(0,0);
+  }
+}
+
+renderGrid();
+window.addEventListener('hashchange', route);
+route();
+</script>
+
+</body>
+</html>

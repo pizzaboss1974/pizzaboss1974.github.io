@@ -474,7 +474,7 @@ async function renderPdfPages(url, title){
     const pdf = await pdfjsLib.getDocument(url).promise;
     container.innerHTML = '';
     const availableWidth = container.clientWidth - 40; // minus padding
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2.5); // cap for performance
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 4); // cap for performance
     for(let n = 1; n <= pdf.numPages; n++){
       const page = await pdf.getPage(n);
       const baseViewport = page.getViewport({ scale: 1 });

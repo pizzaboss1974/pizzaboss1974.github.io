@@ -398,7 +398,7 @@ function renderGrid(){
   const grid = document.getElementById('grid');
   grid.innerHTML = projects.map((p, i) => `
     <a class="card" href="#/project/${i}">
-      <div class="card-num mono">A-${pad(i+1)}</div>
+      <div class="card-num mono">${pad(i+1)}</div>
       <div class="card-thumb">
         ${p.cover ? `<img src="${p.cover}" alt="${p.title}">` : ''}
       </div>
@@ -414,7 +414,7 @@ function renderDetail(i){
   document.getElementById('detail-content').innerHTML = `
     <div class="titleblock">
       <div>
-        <div class="hero-index mono">A-${pad(i+1)}</div>
+        <div class="hero-index mono">${pad(i+1)}</div>
         <h2>${p.title}</h2>
         <p class="desc">${p.description}</p>
       </div>
@@ -439,8 +439,8 @@ function renderDetail(i){
       </div>
     `}
     <div class="project-nav">
-      ${i > 0 ? `<a href="#/project/${i-1}">← A-${pad(i)} Previous</a>` : `<span></span>`}
-      ${i < projects.length-1 ? `<a href="#/project/${i+1}">A-${pad(i+2)} Next →</a>` : `<span></span>`}
+      ${i > 0 ? `<a href="#/project/${i-1}">← ${pad(i)} Previous</a>` : `<span></span>`}
+      ${i < projects.length-1 ? `<a href="#/project/${i+1}">${pad(i+2)} Next →</a>` : `<span></span>`}
     </div>
   `;
 }
